@@ -8,22 +8,23 @@ import json
 def printUserInfo(key, userDict):
     print("Full name:", userDict[key]['FullName'])
     print("Short name:", userDict[key]['ShortName'])
-    if userDict[key]['PasswordHint']:
+    if userDict[key].get('PasswordHint'):
         print("Password hint:", userDict[key]['PasswordHint'])
-    if userDict[key]['hasImage']:
+    if userDict[key].get('hasImage'):
         print("Image at", userDict[key]['imageLocation'])
 
 
 def printExtraInfo(key, userDict, encryptedRootDict):
-    for info in encryptedRootDict[key]['decodedOtherUserData']:
-        if info not in [userDict[key]['FullName'], userDict[key]['ShortName']]:
-            print("Possible extra name data:", info)
+    if encryptedRootDict.get(key):
+        for info in encryptedRootDict[key]['decodedOtherUserData']:
+            if info not in [userDict[key]['FullName'], userDict[key]['ShortName']]:
+                print("Possible extra name data:", info)
 
-    if encryptedRootDict[key]['FullName'] != userDict[key]['FullName']:
-        print("Possible alternative full name:",encryptedRootDict['FullName'])
+        if encryptedRootDict[key]['FullName'] != userDict[key]['FullName']:
+            print("Possible alternative full name:",encryptedRootDict['FullName'])
 
-    if encryptedRootDict[key]['PassphraseHint'] != userDict[key]['PasswordHint']:
-        print("Possible alternative password hint:", encryptedRootDict['PassphraseHint'])
+        if encryptedRootDict[key]['PassphraseHint'] != userDict[key]['PasswordHint']:
+            print("Possible alternative password hint:", encryptedRootDict['PassphraseHint'])
 
 
 
